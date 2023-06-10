@@ -116,7 +116,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findUsersByEmailAndPassword(String email, String password) throws Exception {
-        User user = new User();
+        User user = null;
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT * FROM users WHERE email = ? AND password = ?"
         );
@@ -124,12 +124,16 @@ public class UserRepositoryImpl implements UserRepository {
         preparedStatement.setString(2,password);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
+        if(resultSet.next()){
+            user = new User();
             setUserFields(user,resultSet);
         }
+        else
+            throw new Exception("User not found");
 
         resultSet.close();
         preparedStatement.close();
+
         return user;
     }
 

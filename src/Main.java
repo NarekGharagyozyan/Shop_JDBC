@@ -63,7 +63,7 @@ public class Main {
         UserService userService = new UserServiceImpl(userRepository);
 
         //userService.register(user3);
-        //userService.login("username1@gmail.com", "password1");
+        userService.login("username2@gmail.com", "password2");
 
 
         //CREATE user

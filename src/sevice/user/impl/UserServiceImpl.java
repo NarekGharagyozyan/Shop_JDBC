@@ -28,10 +28,7 @@ public class UserServiceImpl implements UserService {
     public void login(String email, String password) throws Exception {
         validationForLogin(email, password);
         User loginedUser = userRepository.findUsersByEmailAndPassword(email, password);
-        if(loginedUser.getName() == null)
-                throw new Exception("wrong login or password");
-        else
-            System.out.println(loginedUser.getName() + " you are logined successfully");
+        System.out.println(loginedUser.getName() + " you are logined successfully");
     }
 
     private void validationForRegistration(User user) throws Exception {
