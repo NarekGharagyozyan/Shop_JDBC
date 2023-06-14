@@ -5,6 +5,7 @@ public class User {
     private Long id;
     private String name;
     private String lastname;
+    private double balance;
     private String email;
     private String password;
     private int age;
@@ -13,10 +14,11 @@ public class User {
 
     }
 
-    public User(Long id, String name, String lastname, String email, String password, int age) {
+    public User(Long id, String name, String lastname, double balance, String email, String password, int age) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
+        this.balance = balance;
         this.email = email;
         this.password = password;
         this.age = age;
@@ -44,6 +46,14 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public String getEmail() {

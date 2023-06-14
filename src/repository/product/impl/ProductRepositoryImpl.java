@@ -24,6 +24,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                             CREATE TABLE IF NOT EXISTS products (
                             id bigserial primary key,
                             name varchar(255) not null,
+                            price double precision not null,
                             category varchar(255) not null,
                             isExists bool
                             )
@@ -36,11 +37,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void create(Product product) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO products (name,category,isExists) VALUES (?,?,?)"
+                "INSERT INTO products (name,price,category,isExists) VALUES (?,?,?,?)"
         );
         preparedStatement.setString(1, product.getName());
-        preparedStatement.setString(2, product.getCategory());
-        preparedStatement.setBoolean(3, product.isExists());
+        preparedStatement.setDouble(2, product.getPrice());
+        preparedStatement.setString(3, product.getCategory());
+        preparedStatement.setBoolean(4, product.isExists());
 
 
         preparedStatement.executeUpdate();
@@ -50,15 +52,17 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void update(Product product) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE products SET name = ?, category = ?, isexists = ? WHERE id = ?"
+                "UPDATE products SET name = ?, price = ?, category = ?, isexists = ? WHERE id = ?"
         );
 
-        preparedStatement.setString(1, "changed");
-        preparedStatement.setString(2, "changed");
-        preparedStatement.setBoolean(3, product.isExists());
-        preparedStatement.setLong(4, product.getId());
+        preparedStatement.setString(1, product.getName());
+        preparedStatement.setDouble(2, product.getPrice());
+        preparedStatement.setString(3, product.getCategory());
+        preparedStatement.setBoolean(4, product.isExists());
+        preparedStatement.setLong(5, product.getId());
 
         preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 
     @Override
@@ -109,6 +113,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     private void setProductFields(Product product, ResultSet resultSet) throws SQLException {
         product.setId(resultSet.getLong("id"));
         product.setName(resultSet.getString("name"));
+        product.setPrice(resultSet.getDouble("price"));
         product.setCategory(resultSet.getString("category"));
         product.setExists(resultSet.getBoolean("isexists"));
     }

@@ -3,15 +3,17 @@ package model;
 public class Product {
     private Long id;
     private String name;
+    private double price;
     private String category;
     private boolean isExists;
 
     public Product() {
     }
 
-    public Product(Long id, String name, String category, boolean isExists) {
+    public Product(Long id, String name, double price, String category, boolean isExists) {
         this.id = id;
         this.name = name;
+        this.price = price;
         this.category = category;
         this.isExists = isExists;
     }
@@ -30,6 +32,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getCategory() {

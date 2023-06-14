@@ -24,6 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
                             id bigserial primary key,
                             name varchar(255) not null,
                             lastname varchar(255) not null,
+                            balance double precision not null,
                             email varchar(255) not null ,
                             password varchar(255) not null,
                             age integer not null
@@ -39,13 +40,14 @@ public class UserRepositoryImpl implements UserRepository {
     public void create(User user) throws SQLException {
 
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO users (name,lastname,email,password,age) VALUES (?,?,?,?,?)"
+                "INSERT INTO users (name,lastname, balance,email,password,age) VALUES (?,?,?,?,?,?)"
         );
         preparedStatement.setString(1, user.getName());
         preparedStatement.setString(2, user.getLastname());
-        preparedStatement.setString(3, user.getEmail());
-        preparedStatement.setString(4, user.getPassword());
-        preparedStatement.setInt(5, user.getAge());
+        preparedStatement.setDouble(3, user.getBalance());
+        preparedStatement.setString(4, user.getEmail());
+        preparedStatement.setString(5, user.getPassword());
+        preparedStatement.setInt(6, user.getAge());
 
         preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -54,17 +56,19 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void update(User user) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE users SET name = ?, lastname = ?, email = ?, password = ?, age = ? WHERE id = ?"
+                "UPDATE users SET name = ?, lastname = ?, balance = ?, email = ?, password = ?, age = ? WHERE id = ?"
         );
 
-        preparedStatement.setString(1, "ChangedName");
-        preparedStatement.setString(2, "ChangedName");
-        preparedStatement.setString(3, "ChangedName");
-        preparedStatement.setString(4, "ChangedName");
-        preparedStatement.setInt(5, user.getAge());
-        preparedStatement.setLong(6, user.getId());
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getLastname());
+        preparedStatement.setDouble(3, user.getBalance());
+        preparedStatement.setString(4, user.getEmail());
+        preparedStatement.setString(5, user.getPassword());
+        preparedStatement.setInt(6, user.getAge());
+        preparedStatement.setLong(7, user.getId());
 
         preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 
     @Override
@@ -141,6 +145,7 @@ public class UserRepositoryImpl implements UserRepository {
         user.setId(resultSet.getLong("id"));
         user.setName(resultSet.getString("name"));
         user.setLastname(resultSet.getString("lastname"));
+        user.setBalance(resultSet.getDouble("balance"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
         user.setAge(resultSet.getInt("age"));

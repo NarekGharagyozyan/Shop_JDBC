@@ -37,8 +37,9 @@ public class UserServiceImpl implements UserService {
             !user.getEmail().matches("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*"
                                      + "@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"))
             throw new Exception("something with email is wrong");
-        if (user.getPassword().length() < 8 ||
-            user.getPassword() == null)
+        if (user.getPassword() == null ||
+            user.getPassword().length() < 8
+            )
             throw new Exception("password validation is wrong");
     }
 
