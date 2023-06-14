@@ -29,8 +29,8 @@ public class Main {
         Product product2 = new Product(2L,"Iphone",450000,"Electronic", false);
 
 
-        OrderService orderService = new OrderServiceImpl(orderRepository,databaseConnection);
-        orderService.createOrder(user3.getId(),product.getId(),500);
+        OrderService orderService = new OrderServiceImpl(orderRepository,databaseConnection,productRepository,userRepository);
+        orderService.createOrder(user3.getId(),product.getId(),2);
 
         //----------PRODUCTS-------------
         /*//CREATE product

@@ -7,6 +7,16 @@ public class Order {
     private double totalPrice;
     private int totalCountOfProduct;
 
+    public Order() {
+    }
+
+    public Order(Long userId, Long productId, double totalPrice, int totalCountOfProduct) {
+        this.userId = userId;
+        this.productId = productId;
+        this.totalPrice = totalPrice;
+        this.totalCountOfProduct = totalCountOfProduct;
+    }
+
     public Long getId() {
         return id;
     }

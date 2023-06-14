@@ -10,7 +10,7 @@ import java.util.List;
 public interface OrderRepository {
 
 
-    void create(User user, Product product, int count) throws Exception;
+    void create(Order order) throws Exception;
 
     void update(Order order) throws SQLException;
 

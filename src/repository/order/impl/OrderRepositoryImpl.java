@@ -34,31 +34,17 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public void create(User user, Product product, int count) throws Exception {
+    public void create(Order order) throws Exception {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO orders (userId,productId,totalPrice,totalCountOfProduct) VALUES (?,?,?,?)"
         );
-        connection.setAutoCommit(false);
-        preparedStatement.setLong(1, user.getId());
-        preparedStatement.setLong(2, product.getId());
-        preparedStatement.setInt(4, count);
-
-        double productPrice = product.getPrice();
-        double totalPrice = count * productPrice;
-            /*if (user.getBalance() < totalPrice){
-                throw new Exception("Your account doesn't have enough money");
-            }else {
-                preparedStatement.setDouble(3, totalPrice);
-                System.out.println("Your order has been confirmed");
-            }*/
-        if (user.getBalance() < totalPrice){
-            throw new Exception("Your account doesn't have enough money");
-        }
-        preparedStatement.setDouble(3, totalPrice);
+        preparedStatement.setLong(1, order.getUserId());
+        preparedStatement.setLong(2, order.getProductId());
+        preparedStatement.setDouble(3, order.getTotalPrice());
+        preparedStatement.setInt(4, order.getTotalCountOfProduct());
 
         preparedStatement.executeUpdate();
         preparedStatement.close();
-        connection.commit();
     }
 
     @Override
