@@ -21,14 +21,15 @@ public class RegisterServlet extends HttpServlet {
         UserService userService = new UserServiceImpl(userRepository);
         User user = new User();
 
-        user.setName(req.getParameter("name"));
-        user.setLastname(req.getParameter("lastname"));
-        user.setBalance(Double.parseDouble(req.getParameter("balance")));
-        user.setEmail(req.getParameter("email"));
-        user.setPassword(req.getParameter("password"));
-        user.setAge(Integer.parseInt(req.getParameter("age")));
 
         try {
+            user.setName(req.getParameter("name"));
+            user.setLastname(req.getParameter("lastname"));
+            user.setBalance(Double.parseDouble(req.getParameter("balance")));
+            user.setEmail(req.getParameter("email"));
+            user.setPassword(req.getParameter("password"));
+            user.setAge(Integer.parseInt(req.getParameter("age")));
+
             userService.register(user);
             resp.sendRedirect("home.html");
         } catch (Exception e) {

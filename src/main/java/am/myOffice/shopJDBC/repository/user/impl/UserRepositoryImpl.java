@@ -49,16 +49,19 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPassword());
             preparedStatement.setInt(6, user.getAge());
+
+            var i = preparedStatement.executeUpdate();
+            if (i == 0)
+                throw new Exception("something is wrong");
         }catch (Exception e){
             throw new Exception("something is wrong");
         }
 
-        preparedStatement.executeUpdate();
         preparedStatement.close();
     }
 
     @Override
-    public void update(User user) throws SQLException {
+    public void update(User user) throws Exception {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE users SET name = ?, lastname = ?, balance = ?, email = ?, password = ?, age = ? WHERE id = ?"
         );

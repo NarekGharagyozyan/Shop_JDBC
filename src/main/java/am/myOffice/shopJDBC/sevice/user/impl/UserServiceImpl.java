@@ -14,12 +14,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void register(User user) {
+    public void register(User user) throws Exception {
         try {
             validationForRegistration(user);
             userRepository.create(user);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new Exception("something is wrong");
         }
     }
 
