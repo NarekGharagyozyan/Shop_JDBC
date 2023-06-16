@@ -1,0 +1,15 @@
+am\myOffice\shopJDBC\model\User.class
+am\myOffice\shopJDBC\util\DatabaseConnection.class
+am\myOffice\shopJDBC\model\Product.class
+am\myOffice\shopJDBC\repository\order\OrderRepository.class
+am\myOffice\shopJDBC\sevice\order\OrderService.class
+am\myOffice\shopJDBC\model\Order.class
+am\myOffice\shopJDBC\sevice\order\impl\OrderServiceImpl.class
+am\myOffice\shopJDBC\sevice\user\UserService.class
+am\myOffice\shopJDBC\Main.class
+am\myOffice\shopJDBC\repository\user\UserRepository.class
+am\myOffice\shopJDBC\repository\order\impl\OrderRepositoryImpl.class
+am\myOffice\shopJDBC\repository\product\ProductRepository.class
+am\myOffice\shopJDBC\sevice\user\impl\UserServiceImpl.class
+am\myOffice\shopJDBC\repository\product\impl\ProductRepositoryImpl.class
+am\myOffice\shopJDBC\repository\user\impl\UserRepositoryImpl.class
