@@ -1,5 +1,6 @@
 package am.myOffice.shopJDBC.controller;
 
+import am.myOffice.shopJDBC.model.User;
 import am.myOffice.shopJDBC.repository.user.UserRepository;
 import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
@@ -18,19 +19,20 @@ public class RegisterServlet extends HttpServlet {
 
         UserRepository userRepository = new UserRepositoryImpl(DatabaseConnection.getInstance());
         UserService userService = new UserServiceImpl(userRepository);
-        var name = req.getParameter("name");
-        var lastname = req.getParameter("lastname");
-        var balance = req.getParameter("balance");
-        var email = req.getParameter("email");
-        var password = req.getParameter("password");
-        var age = req.getParameter("age");
+        User user = new User();
+
+        user.setName(req.getParameter("name"));
+        user.setLastname(req.getParameter("lastname"));
+        user.setBalance(Double.parseDouble(req.getParameter("balance")));
+        user.setEmail(req.getParameter("email"));
+        user.setPassword(req.getParameter("password"));
+        user.setAge(Integer.parseInt(req.getParameter("age")));
 
         try {
-
+            userService.register(user);
             resp.sendRedirect("home.html");
         } catch (Exception e) {
-            System.out.println("please login again");
+            resp.getWriter().write("Go back and try again");
         }
-
     }
 }

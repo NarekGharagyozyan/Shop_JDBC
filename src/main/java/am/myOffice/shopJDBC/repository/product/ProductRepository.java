@@ -8,14 +8,14 @@ import java.util.List;
 public interface ProductRepository {
 
     void create(Product product) throws SQLException;
-    void update(Product product) throws SQLException;
+    void update(Product product, Long id) throws Exception;
 
-    Product get(Long id) throws SQLException;
+    Product get(Long id) throws Exception;
 
     List<Product> getAll() throws SQLException;
 
     List<Product> findProductsByName(String name) throws SQLException;
 
-    void delete(Long id) throws SQLException;
+    void delete(Long id) throws Exception;
 
 }

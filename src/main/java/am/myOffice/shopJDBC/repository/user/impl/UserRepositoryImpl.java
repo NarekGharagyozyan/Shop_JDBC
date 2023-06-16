@@ -37,17 +37,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void create(User user) throws SQLException {
+    public void create(User user) throws Exception {
 
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO users (name,lastname, balance,email,password,age) VALUES (?,?,?,?,?,?)"
         );
-        preparedStatement.setString(1, user.getName());
-        preparedStatement.setString(2, user.getLastname());
-        preparedStatement.setDouble(3, user.getBalance());
-        preparedStatement.setString(4, user.getEmail());
-        preparedStatement.setString(5, user.getPassword());
-        preparedStatement.setInt(6, user.getAge());
+        try {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setDouble(3, user.getBalance());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setInt(6, user.getAge());
+        }catch (Exception e){
+            throw new Exception("something is wrong");
+        }
 
         preparedStatement.executeUpdate();
         preparedStatement.close();

@@ -6,27 +6,84 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        input {
+            padding: 10px ;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            padding: 10px 30px;
+        }
+
+        .main {
+            margin: 0 auto;
+            max-width: 65%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .lr {
+            width: fit-content;
+        }
+
+        .product_crud {
+            margin: 60px auto;
+            max-width: 65%;
+            width: 100%;
+        }
+
+        .product_crud div {
+            justify-content: space-between;
+        }
+
+        .crud_item {
+            border: 1px solid #222;
+            padding: 55px 45px;
+        }
+
+        a {
+            width: fit-content;
+            text-decoration: none;
+            color: #222222;
+        }
+    </style>
 </head>
 <body>
-<h1>Invalid login or password</h1>
 
-    <h1>Login</h1>
-    <form method="post" action="/login">
-        email: <input type="text" name="email"></br>
-        password: <input type="password" name="password"></br>
-        <input type="submit" value="login">
-    </form>
+    <div class="main">
+        <div class="lr">
+            <h1>Login</h1>
+            <form method="post" action="/login">
+                <input type="text" placeholder="email" name="email">
+                <input type="password" placeholder="password" name="password"></br>
+                <input class="button" type="submit" value="login">
+            </form>
+        </div>
 
-    <h1>Register</h1>
-    <form method="post" action="/register">
-        name: <input type="text" name="name"></br>
-        lastname: <input type="text" name="lastname"></br>
-        balance: <input type="text" name="balance"></br>
-        email: <input type="email" name="email"></br>
-        password: <input type="password" name="password"></br>
-        age: <input type="text" name="age"></br>
-        <input type="submit" value="register">
-    </form>
+        <div class="lr">
+            <h1>Register</h1>
+            <form method="post" action="/register">
+                <input type="text" placeholder="name" name="name">
+                <input type="text" placeholder="lastname" name="lastname"></br>
+                <input type="text" placeholder="balance" name="balance">
+                <input type="email" placeholder="email" name="email"></br>
+                <input type="password" placeholder="password" name="password">
+                <input type="text" placeholder="age" name="age"></br>
+                <input type="submit" value="register">
+            </form>
+        </div>
+    </div>
+    <div class="product_crud">
+        <h1>Product CRUD</h1>
+        <div style="display: flex">
+            <a href="CRUDProduct/createProduct.html"><div class="crud_item"><span>CREATE</span></div></a>
+            <a href="CRUDProduct/readProduct.html"><div class="crud_item"><span>READ</span></div></a>
+            <a href="CRUDProduct/updateProduct.html"><div class="crud_item"><span>UPDATE</span></div></a>
+            <a href="CRUDProduct/deleteProduct.html"><div class="crud_item"><span>DELETE</span></div></a>
+        </div>
+    </div>
 
 </body>
 </html>

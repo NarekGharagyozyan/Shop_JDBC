@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserRepository {
 
-    void create(User user) throws SQLException;
+    void create(User user) throws SQLException, Exception;
 
     void update(User user) throws SQLException;
 

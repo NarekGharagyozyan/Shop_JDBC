@@ -38,10 +38,14 @@ public class ProductRepositoryImpl implements ProductRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO products (name,price,category,isExists) VALUES (?,?,?,?)"
         );
-        preparedStatement.setString(1, product.getName());
-        preparedStatement.setDouble(2, product.getPrice());
-        preparedStatement.setString(3, product.getCategory());
-        preparedStatement.setBoolean(4, product.isExists());
+        try{
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getCategory());
+            preparedStatement.setBoolean(4, product.isExists());
+        }catch (Exception e){
+            throw new RuntimeException("Something went wrong");
+        }
 
 
         preparedStatement.executeUpdate();
@@ -49,7 +53,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void update(Product product) throws SQLException {
+    public void update(Product product, Long id) throws Exception {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE products SET name = ?, price = ?, category = ?, isexists = ? WHERE id = ?"
         );
@@ -58,20 +62,28 @@ public class ProductRepositoryImpl implements ProductRepository {
         preparedStatement.setDouble(2, product.getPrice());
         preparedStatement.setString(3, product.getCategory());
         preparedStatement.setBoolean(4, product.isExists());
-        preparedStatement.setLong(5, product.getId());
+        preparedStatement.setLong(5, id);
 
-        preparedStatement.executeUpdate();
+        var i = preparedStatement.executeUpdate();
+        if (i == 0){
+            throw new Exception("Product not found");
+        }
         preparedStatement.close();
     }
 
     @Override
-    public Product get(Long id) throws SQLException {
-        Product product = new Product();
+    public Product get(Long id) throws Exception {
+        Product product = null;
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from products WHERE id = ?");
         preparedStatement.setLong(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
+            product = new Product();
             setProductFields(product, resultSet);
+        }
+
+        if (product == null){
+            throw new RuntimeException("product not found");
         }
         resultSet.close();
         preparedStatement.close();
@@ -99,12 +111,18 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void delete(Long id) throws SQLException {
+    public void delete(Long id) throws Exception {
 
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE from products WHERE id = ?");
         preparedStatement.setLong(1, id);
 
-        preparedStatement.executeUpdate();
+        try {
+            var i = preparedStatement.executeUpdate();
+            if (i == 0)
+                throw new Exception("error with deleting");
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
 
         preparedStatement.close();
     }

@@ -44,21 +44,28 @@ public class LoginServlet extends HttpServlet {
                                    "          content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">\n" +
                                    "    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n" +
                                    "    <title>Document</title>\n" +
+
                                    "</head>\n" +
+                                   "<style>" +
+                                   "input{"+
+                                   "     padding: 10px ;"+
+                                   "     margin-bottom: 10px;"+
+                                   "}"+
+                                   ".button {"+
+                                   "    padding: 10px 30px;"+
+                                   "}"+
+                                   "</style>"+
                                    "<body>\n" +
                                    "<h1>Invalid login or password</h1>\n" +
                                    "\n" +
                                    "    <h1>Login</h1>\n" +
                                    "    <form method=\"post\" action=\"/login\">\n" +
-                                   "        email: <input type=\"text\" name=\"email\"></br>\n" +
-                                   "        password: <input type=\"password\" name=\"password\"></br>\n" +
+                                   "        <input type=\"text\" placeholder=\"email\" name=\"email\"></br>\n" +
+                                   "        <input type=\"password\" placeholder=\"password\" name=\"password\"></br>\n" +
                                    "        <input type=\"submit\" value=\"login\">\n" +
                                    "    </form>\n" +
                                    "</body>\n" +
                                    "</html>");
         }
-
-
-
     }
 }

@@ -14,10 +14,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void register(User user) throws Exception {
-        validationForRegistration(user);
-        userRepository.create(user);
-        System.out.println(user.getName() + " you are registered successfully");
+    public void register(User user) {
+        try {
+            validationForRegistration(user);
+            userRepository.create(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
