@@ -7,15 +7,16 @@ import java.util.List;
 
 public interface ProductRepository {
 
-    void create(Product product) throws SQLException;
-    void update(Product product, Long id) throws Exception;
+    void create(Product product);
+    void update(Product product, Long id) ;
 
-    Product get(Long id) throws Exception;
+    Product get(Long id);
+    List<String> getColumns();
 
-    List<Product> getAll() throws SQLException;
+    List<Product> getAll();
 
     List<Product> findProductsByName(String name) throws SQLException;
 
-    void delete(Long id) throws Exception;
+    void delete(Long id);
 
 }

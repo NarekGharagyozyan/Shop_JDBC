@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 
 public class CreateProductServlet extends HttpServlet {
 
@@ -20,15 +18,17 @@ public class CreateProductServlet extends HttpServlet {
         ProductRepository productRepository = new ProductRepositoryImpl(DatabaseConnection.getInstance());
         Product product = new Product();
 
-        product.setName(req.getParameter("name"));
-        product.setPrice(Double.parseDouble(req.getParameter("price")));
-        product.setCategory(req.getParameter("category"));
-        product.setExists(Boolean.getBoolean(req.getParameter("isexists")));
         try {
+            product.setName(req.getParameter("name"));
+            product.setPrice(Double.parseDouble(req.getParameter("price")));
+            product.setCategory(req.getParameter("category"));
+            product.setExists(Boolean.parseBoolean(req.getParameter("isexists")));
+
             productRepository.create(product);
-            resp.getWriter().write("Product created");
+            req.getRequestDispatcher("index.jsp").forward(req,resp);
         } catch (Exception e) {
-            resp.getWriter().write("Go back and try again");
+            req.setAttribute("message",e.getMessage());
+            req.getRequestDispatcher("CRUDProduct/createProduct.jsp").forward(req,resp);
         }
     }
 }

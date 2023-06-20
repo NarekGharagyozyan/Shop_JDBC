@@ -7,4 +7,7 @@ public interface UserService {
     void register(User user) throws Exception;
     void login(String email, String password) throws Exception;
 
+    void changePassword(String email,String newPassword,String repeatPassword);
+
+    void deleteAccount(String email);
 }

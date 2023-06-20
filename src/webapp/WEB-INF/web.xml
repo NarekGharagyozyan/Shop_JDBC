@@ -35,6 +35,17 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>change</servlet-name>
+        <servlet-class>am.myOffice.shopJDBC.controller.ChangePasswordServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>change</servlet-name>
+        <url-pattern>/change</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>create</servlet-name>
         <servlet-class>am.myOffice.shopJDBC.controller.Product.CreateProductServlet</servlet-class>
@@ -73,6 +84,16 @@
     <servlet-mapping>
         <servlet-name>delete</servlet-name>
         <url-pattern>/deleteProduct</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteAcc</servlet-name>
+        <servlet-class>am.myOffice.shopJDBC.controller.AccountDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>deleteAcc</servlet-name>
+        <url-pattern>/deleteAccount</url-pattern>
     </servlet-mapping>
 
 </web-app>

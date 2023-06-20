@@ -1,8 +1,10 @@
 package am.myOffice.shopJDBC.repository.user.impl;
 
+import am.myOffice.shopJDBC.exceptions.UserNotFoundException;
 import am.myOffice.shopJDBC.model.User;
 import am.myOffice.shopJDBC.repository.user.UserRepository;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Message;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -115,35 +117,43 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(Long id) throws SQLException {
+    public void delete(Long id) {
 
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE from users WHERE id = ?");
-        preparedStatement.setLong(1, id);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("DELETE from users WHERE id = ?");
+            preparedStatement.setLong(1, id);
 
-        preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-        preparedStatement.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
-    public User findUsersByEmailAndPassword(String email, String password) throws Exception {
+    public User findUsersByEmail(String email) {
         User user = null;
-        PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT * FROM users WHERE email = ? AND password = ?"
-        );
-        preparedStatement.setString(1,email);
-        preparedStatement.setString(2,password);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM users WHERE email = ?");
+            preparedStatement.setString(1,email);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if(resultSet.next()){
-            user = new User();
-            setUserFields(user,resultSet);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                user = new User();
+                setUserFields(user,resultSet);
+            }
+            else
+                throw new UserNotFoundException(Message.USER_NOT_FOUNT);
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        else
-            throw new Exception("User not found");
-
-        resultSet.close();
-        preparedStatement.close();
 
         return user;
     }

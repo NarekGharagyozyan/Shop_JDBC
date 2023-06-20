@@ -26,6 +26,8 @@ public class Main {
 //
 //        UserRepository userRepository = new UserRepositoryImpl(databaseConnection);
 //        ProductRepository productRepository = new ProductRepositoryImpl(databaseConnection);
+
+
 //        OrderRepository orderRepository = new OrderRepositoryImpl(databaseConnection);
 //
 //        User user = new User(1L, "Gogo", "Khachatryan", 75000, "username1@gmail.com", "password1", 27);

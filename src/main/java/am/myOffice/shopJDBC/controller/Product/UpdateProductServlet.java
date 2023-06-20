@@ -13,20 +13,21 @@ import java.io.IOException;
 
 public class UpdateProductServlet extends HttpServlet {
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         ProductRepository productRepository = new ProductRepositoryImpl(DatabaseConnection.getInstance());
         Product product = new Product();
 
         product.setName(req.getParameter("name"));
         product.setPrice(Double.parseDouble(req.getParameter("price")));
         product.setCategory(req.getParameter("category"));
-        product.setExists(Boolean.getBoolean(req.getParameter("isexists")));
+        product.setExists(Boolean.parseBoolean(req.getParameter("isexists")));
         var id = Long.parseLong(req.getParameter("id"));
         try {
             productRepository.update(product, id);
-            resp.getWriter().write("Product updated");
+            req.getRequestDispatcher("index.jsp").forward(req,resp);
         } catch (Exception e) {
-            resp.getWriter().write("Go back and try again");
+            req.setAttribute("message",e.getMessage());
+            req.getRequestDispatcher("CRUDProduct/updateProduct.jsp").forward(req,resp);
         }
     }
 }
