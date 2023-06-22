@@ -8,6 +8,7 @@ import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.sevice.user.impl.UserServiceImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,10 +37,10 @@ public class RegisterServlet extends HttpServlet {
             userService.register(user);
             req.setAttribute("email",req.getParameter("email"));
 
-            req.getRequestDispatcher("index.jsp").forward(req,resp);
+            req.getRequestDispatcher(Path.INDEX_PATH).forward(req,resp);
         } catch (Exception e) {
             req.setAttribute("message", e.getMessage());
-            req.getRequestDispatcher("register.jsp").forward(req,resp);
+            req.getRequestDispatcher(Path.REGISTER_PATH).forward(req,resp);
         }
     }
 }

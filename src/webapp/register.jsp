@@ -8,18 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Register Page</title>
     <style>
-      /*input {
-        padding: 10px ;
-        margin-bottom: 10px;
-      }
-
-      .button {
-        padding: 10px 30px;
-      }*/
-
-      /* Import Google font - Poppins */
       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
       *{
         margin: 0;
@@ -111,20 +101,15 @@
         text-decoration: underline;
       }
 
+      .message {
+          padding-bottom: 40px;
+          color: red;
+      }
     </style>
 </head>
 <body>
-  <%--<h1>Register</h1>
-  <form method="post" action="/register">
-    <input type="text" placeholder="name" name="name">
-    <input type="text" placeholder="lastname" name="lastname"></br>
-    <input type="text" placeholder="balance" name="balance">
-    <input type="email" placeholder="email" name="email"></br>
-    <input type="password" placeholder="password" name="password">
-    <input type="text" placeholder="age" name="age"></br>
-    <input type="submit" class="button" value="register">--%>
 
-  <%= (String) request.getAttribute("message") != null ?  request.getAttribute("message") : "" %>
+<h3 class="message"><%= (String) request.getAttribute("message") != null ?  request.getAttribute("message") : "" %></h3>
 
   <div class="container">
       <div class="registration form">

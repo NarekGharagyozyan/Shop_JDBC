@@ -73,9 +73,9 @@ public class ProductRepositoryImpl implements ProductRepository {
             preparedStatement.setLong(5, id);
 
             var i = preparedStatement.executeUpdate();
-            if (i == 0){
+            /*if (i == 0){
                 throw new ProductNotFoundException(Message.PRODUCT_NOT_FOUND);
-            }
+            }*/
             preparedStatement.close();
         } catch (Exception e) {
             throw new ProductValidationException(Message.PRODUCT_NOT_FOUND);
@@ -125,14 +125,19 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> findProductsByName(String name) throws SQLException {
+    public List<Product> findProductsByName(String name){
         List<Product> products = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT * FROM products WHERE lower(name) LIKE lower(concat('%',?,'%'))"
-        );
-        preparedStatement.setString(1, name);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        addProductToListFromResultSet(products, resultSet);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM products WHERE lower(name) LIKE lower(concat('%',?,'%'))"
+            );
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            addProductToListFromResultSet(products, resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return products;
     }
 
@@ -169,19 +174,28 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
 
-    private void setProductFields(Product product, ResultSet resultSet) throws SQLException {
-        product.setId(resultSet.getLong("id"));
-        product.setName(resultSet.getString("name"));
-        product.setPrice(resultSet.getDouble("price"));
-        product.setCategory(resultSet.getString("category"));
-        product.setExists(resultSet.getBoolean("isexists"));
+    private void setProductFields(Product product, ResultSet resultSet){
+        try {
+            product.setId(resultSet.getLong("id"));
+            product.setName(resultSet.getString("name"));
+            product.setPrice(resultSet.getDouble("price"));
+            product.setCategory(resultSet.getString("category"));
+            product.setExists(resultSet.getBoolean("isexists"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void addProductToListFromResultSet(List<Product> productsList, ResultSet resultSet) throws SQLException {
-        while (resultSet.next()) {
-            Product product = new Product();
-            setProductFields(product, resultSet);
-            productsList.add(product);
+    private void addProductToListFromResultSet(List<Product> productsList, ResultSet resultSet){
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                Product product = new Product();
+                setProductFields(product, resultSet);
+                productsList.add(product);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package am.myOffice.shopJDBC.controller.Product;
 import am.myOffice.shopJDBC.repository.product.ProductRepository;
 import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +19,10 @@ public class ReadProductServlet extends HttpServlet {
         try {
             var product = productRepository.get(Long.parseLong(req.getParameter("id")));
             req.setAttribute("product",product.toString());
-            req.getRequestDispatcher("index.jsp").forward(req,resp);
+            req.getRequestDispatcher(Path.READ_PRODUCT_PATH).forward(req,resp);
         } catch (Exception e) {
             req.setAttribute("message",e.getMessage());
-            req.getRequestDispatcher("CRUDProduct/readProduct.jsp").forward(req,resp);
+            req.getRequestDispatcher(Path.READ_PRODUCT_PATH).forward(req,resp);
         }
     }
 }

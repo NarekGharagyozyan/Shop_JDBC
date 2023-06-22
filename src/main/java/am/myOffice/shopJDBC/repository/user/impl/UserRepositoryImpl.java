@@ -1,6 +1,7 @@
 package am.myOffice.shopJDBC.repository.user.impl;
 
 import am.myOffice.shopJDBC.exceptions.UserNotFoundException;
+import am.myOffice.shopJDBC.exceptions.ValidationException;
 import am.myOffice.shopJDBC.model.User;
 import am.myOffice.shopJDBC.repository.user.UserRepository;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
@@ -39,12 +40,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void create(User user) throws Exception {
+    public void create(User user){
 
-        PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO users (name,lastname, balance,email,password,age) VALUES (?,?,?,?,?,?)"
-        );
+        PreparedStatement preparedStatement = null;
         try {
+            preparedStatement = connection.prepareStatement(
+                    "INSERT INTO users (name,lastname, balance,email,password,age) VALUES (?,?,?,?,?,?)"
+            );
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastname());
             preparedStatement.setDouble(3, user.getBalance());
@@ -55,63 +57,84 @@ public class UserRepositoryImpl implements UserRepository {
             var i = preparedStatement.executeUpdate();
             if (i == 0)
                 throw new Exception("something is wrong");
+            preparedStatement.close();
         }catch (Exception e){
-            throw new Exception("something is wrong");
+            throw new ValidationException(Message.REGISTRATION_IS_FAILED);
         }
 
-        preparedStatement.close();
     }
 
     @Override
-    public void update(User user) throws Exception {
-        PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE users SET name = ?, lastname = ?, balance = ?, email = ?, password = ?, age = ? WHERE id = ?"
-        );
+    public void update(User user){
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "UPDATE users SET name = ?, lastname = ?, balance = ?, email = ?, password = ?, age = ? WHERE id = ?"
+            );
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setDouble(3, user.getBalance());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setInt(6, user.getAge());
+            preparedStatement.setLong(7, user.getId());
 
-        preparedStatement.setString(1, user.getName());
-        preparedStatement.setString(2, user.getLastname());
-        preparedStatement.setDouble(3, user.getBalance());
-        preparedStatement.setString(4, user.getEmail());
-        preparedStatement.setString(5, user.getPassword());
-        preparedStatement.setInt(6, user.getAge());
-        preparedStatement.setLong(7, user.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
     }
 
     @Override
-    public User get(Long id) throws SQLException {
+    public User get(Long id){
         User user = new User();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from users WHERE id = ?");
-        preparedStatement.setLong(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            setUserFields(user, resultSet);
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * from users WHERE id = ?");
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                setUserFields(user, resultSet);
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        resultSet.close();
-        preparedStatement.close();
         return user;
     }
 
     @Override
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll() {
         List<User> usersList = new ArrayList<>();
-        ResultSet resultSet = connection.createStatement().executeQuery("SELECT * from users");
-        addUserToListFromResultSet(usersList, resultSet);
+        ResultSet resultSet;
+        try {
+            resultSet = connection.createStatement().executeQuery("SELECT * from users");
+            addUserToListFromResultSet(usersList, resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return usersList;
     }
 
 
     @Override
-    public List<User> findUsersByName(String name) throws SQLException {
+    public List<User> findUsersByName(String name) {
 
         List<User> users = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT * FROM users WHERE lower(name) LIKE lower(concat('%',?,'%'))"
-        );
-        preparedStatement.setString(1, name);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM users WHERE lower(name) LIKE lower(concat('%',?,'%'))"
+            );
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         addUserToListFromResultSet(users, resultSet);
         return users;
     }
@@ -119,7 +142,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void delete(Long id) {
 
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement("DELETE from users WHERE id = ?");
             preparedStatement.setLong(1, id);
@@ -134,7 +157,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     public User findUsersByEmail(String email) {
         User user = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement(
                     "SELECT * FROM users WHERE email = ?");
@@ -158,21 +181,30 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
-    private void setUserFields(User user, ResultSet resultSet) throws SQLException {
-        user.setId(resultSet.getLong("id"));
-        user.setName(resultSet.getString("name"));
-        user.setLastname(resultSet.getString("lastname"));
-        user.setBalance(resultSet.getDouble("balance"));
-        user.setEmail(resultSet.getString("email"));
-        user.setPassword(resultSet.getString("password"));
-        user.setAge(resultSet.getInt("age"));
+    private void setUserFields(User user, ResultSet resultSet){
+        try {
+            user.setId(resultSet.getLong("id"));
+            user.setName(resultSet.getString("name"));
+            user.setLastname(resultSet.getString("lastname"));
+            user.setBalance(resultSet.getDouble("balance"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPassword(resultSet.getString("password"));
+            user.setAge(resultSet.getInt("age"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void addUserToListFromResultSet(List<User> usersList, ResultSet resultSet) throws SQLException {
-        while (resultSet.next()) {
-            User user = new User();
-            setUserFields(user, resultSet);
-            usersList.add(user);
+    private void addUserToListFromResultSet(List<User> usersList, ResultSet resultSet) {
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                User user = new User();
+                setUserFields(user, resultSet);
+                usersList.add(user);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -1,12 +1,11 @@
 package am.myOffice.shopJDBC.controller;
 
-import am.myOffice.shopJDBC.repository.product.ProductRepository;
-import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryImpl;
 import am.myOffice.shopJDBC.repository.user.UserRepository;
 import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.sevice.user.impl.UserServiceImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,25 +25,15 @@ public class ChangePasswordServlet extends HttpServlet {
         String newPassword = req.getParameter("newPassword");
         String repeatPassword = req.getParameter("repeatPassword");
 
-        ProductRepository productRepository = new ProductRepositoryImpl(DatabaseConnection.getInstance());
-        var allProducts = productRepository.getAll();
-        var columns = productRepository.getColumns();
-
-
         try {
             userService.changePassword(email,newPassword,repeatPassword);
             req.setAttribute("email", email);
-            req.setAttribute("products", allProducts);
-            req.setAttribute("columns", columns);
-            req.getRequestDispatcher("home.jsp").forward(req,resp);
+            req.getRequestDispatcher(Path.HOME_PATH).forward(req,resp);
         }catch (Exception e) {
             req.setAttribute("message",e.getMessage());
             req.setAttribute("email", email);
-            req.getRequestDispatcher("changePassword.jsp").forward(req,resp);
+            req.getRequestDispatcher(Path.REGISTER_PATH).forward(req,resp);
         }
 
     }
-
-
-
 }

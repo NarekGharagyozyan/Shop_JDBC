@@ -96,4 +96,33 @@
         <url-pattern>/deleteAccount</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>am.myOffice.shopJDBC.controller.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>product</servlet-name>
+        <servlet-class>am.myOffice.shopJDBC.controller.Product.ProductServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>product</servlet-name>
+        <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>authFilter</filter-name>
+        <filter-class>am.myOffice.shopJDBC.filter.AuthorizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/Secure/*</url-pattern>
+    </filter-mapping>
 </web-app>
