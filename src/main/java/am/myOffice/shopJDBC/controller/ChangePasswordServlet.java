@@ -21,18 +21,15 @@ public class ChangePasswordServlet extends HttpServlet {
         UserRepository userRepository = new UserRepositoryImpl(DatabaseConnection.getInstance());
         UserService userService = new UserServiceImpl(userRepository);
 
-        String email = req.getParameter("email");
-        String newPassword = req.getParameter("newPassword");
-        String repeatPassword = req.getParameter("repeatPassword");
-
+        var email = (String)req.getSession().getAttribute("email");
+        var newPassword = req.getParameter("newPassword");
+        var repeatPassword = req.getParameter("repeatPassword");
         try {
             userService.changePassword(email,newPassword,repeatPassword);
-            req.setAttribute("email", email);
             req.getRequestDispatcher(Path.HOME_PATH).forward(req,resp);
         }catch (Exception e) {
             req.setAttribute("message",e.getMessage());
-            req.setAttribute("email", email);
-            req.getRequestDispatcher(Path.REGISTER_PATH).forward(req,resp);
+            req.getRequestDispatcher(Path.CHANGE_PASSWORD_PATH).forward(req,resp);
         }
 
     }

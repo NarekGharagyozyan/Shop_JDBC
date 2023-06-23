@@ -115,9 +115,7 @@
         <form action="/product">
             <input class="btn" type="submit" value="Product Page">
         </form>
-        <form action="/change">
-            <input class="btn" type="submit" value="Change Password">
-        </form>
+        <a href="/Secure/changePassword.jsp" class="btn" >Change Password</a>
         <form action="/deleteAccount">
             <input class="btn" type="submit" value="Delete Account">
         </form>

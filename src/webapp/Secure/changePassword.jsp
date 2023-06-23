@@ -99,9 +99,15 @@
             background: #006653;
         }
 
+        .message {
+            padding-bottom: 30px;
+            color: red;
+        }
     </style>
 </head>
 <body>
+
+    <h3 class="message" ><%= request.getAttribute("message") != null ?  request.getAttribute("message") : "" %></h3>
 
     <div class="container">
         <div class="form_div">
