@@ -11,4 +11,6 @@ public interface Message {
     String REGISTRATION_IS_FAILED = "Registration failed";
     String PRODUCT_CREATION_FAILED = "Product creation failed";
     String PRODUCT_NOT_FOUND = "Product not found";
+    String USER_WITH_THIS_EMAIL_IS_ALREADY_EXISTS = "User with this email is already exists";
+
 }

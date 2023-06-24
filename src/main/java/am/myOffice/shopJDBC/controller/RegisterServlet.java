@@ -1,5 +1,6 @@
 package am.myOffice.shopJDBC.controller;
 
+import am.myOffice.shopJDBC.exceptions.ValidationException;
 import am.myOffice.shopJDBC.model.User;
 import am.myOffice.shopJDBC.repository.product.ProductRepository;
 import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryImpl;
@@ -8,6 +9,7 @@ import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.sevice.user.impl.UserServiceImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Message;
 import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
@@ -34,9 +36,9 @@ public class RegisterServlet extends HttpServlet {
             user.setPassword(req.getParameter("password"));
             user.setAge(Integer.parseInt(req.getParameter("age")));
 
+            userRepository.isUserExists(req.getParameter("email"));
             userService.register(user);
             req.setAttribute("email",req.getParameter("email"));
-
             req.getRequestDispatcher(Path.INDEX_PATH).forward(req,resp);
         } catch (Exception e) {
             req.setAttribute("message", e.getMessage());

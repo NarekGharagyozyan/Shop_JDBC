@@ -20,4 +20,6 @@ public interface UserRepository {
     void delete(Long id);
 
     User findUsersByEmail(String email);
+
+    void isUserExists(String email);
 }

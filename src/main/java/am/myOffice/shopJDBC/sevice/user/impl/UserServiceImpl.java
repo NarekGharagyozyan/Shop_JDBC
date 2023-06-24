@@ -6,6 +6,7 @@ import am.myOffice.shopJDBC.model.User;
 import am.myOffice.shopJDBC.repository.user.UserRepository;
 import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.util.constants.Message;
+import am.myOffice.shopJDBC.util.encoder.MD5Encoder;
 
 public class UserServiceImpl implements UserService {
 
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     public void register(User user){
         try {
             validationForRegistration(user);
+            user.setPassword(MD5Encoder.encode(user.getPassword()));
             userRepository.create(user);
         } catch (Exception e) {
             throw new ValidationException(Message.REGISTRATION_IS_FAILED);
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public void login(String email, String password) throws Exception {
         validationForLogin(email, password);
         User loginedUser = userRepository.findUsersByEmail(email);
-        if (!loginedUser.getPassword().equals(password)){
+        if (!loginedUser.getPassword().equals(MD5Encoder.encode(password))){
             throw new ValidationException(Message.WRONG_EMAIL_OR_PASSWORD);
         }
     }
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService {
         if (user == null)
             throw new UserNotFoundException(Message.USER_NOT_FOUNT);
         passwordValidation(newPassword);
-        user.setPassword(newPassword);
+        user.setPassword(MD5Encoder.encode(newPassword));
         try {
             userRepository.update(user);
         } catch (Exception e) {

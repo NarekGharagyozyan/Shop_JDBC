@@ -18,15 +18,15 @@
         font-family: 'Poppins', sans-serif;
       }
       body{
-        min-height: 100vh;
-        width: 100%;
-        background: #009579;
+          min-height: 100vh;
+          width: 100%;
+          flex-direction: column;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #009579;
       }
       .container{
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%,-50%);
           max-width: 600px;
           width: 100%;
           background: #fff;
@@ -102,15 +102,15 @@
       }
 
       .message {
-          padding-bottom: 40px;
+          padding-bottom: 30px;
           color: red;
       }
     </style>
 </head>
 <body>
 
-<h3 class="message"><%= (String) request.getAttribute("message") != null ?  request.getAttribute("message") : "" %></h3>
 
+    <h3 class="message"><%= (String) request.getAttribute("message") != null ?  request.getAttribute("message") : "" %></h3>
   <div class="container">
       <div class="registration form">
           <header>Signup</header>

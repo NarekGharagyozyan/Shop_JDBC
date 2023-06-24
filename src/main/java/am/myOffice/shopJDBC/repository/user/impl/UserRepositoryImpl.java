@@ -181,6 +181,21 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
+    @Override
+    public void isUserExists(String email) {
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM users WHERE email = ?");
+            preparedStatement.setString(1,email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+                throw new ValidationException(Message.USER_WITH_THIS_EMAIL_IS_ALREADY_EXISTS);
+        } catch (Exception e) {
+            throw new ValidationException(Message.USER_WITH_THIS_EMAIL_IS_ALREADY_EXISTS);
+        }
+    }
+
     private void setUserFields(User user, ResultSet resultSet){
         try {
             user.setId(resultSet.getLong("id"));

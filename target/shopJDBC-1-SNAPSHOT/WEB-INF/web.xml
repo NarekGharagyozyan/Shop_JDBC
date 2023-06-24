@@ -4,6 +4,9 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <welcome-file-list>
+        <welcome-file>start</welcome-file>
+    </welcome-file-list>
 
     <servlet>
         <servlet-name>helloWorld</servlet-name>
@@ -114,6 +117,16 @@
     <servlet-mapping>
         <servlet-name>product</servlet-name>
         <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>start</servlet-name>
+        <servlet-class>am.myOffice.shopJDBC.controller.StartServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>start</servlet-name>
+        <url-pattern>/start</url-pattern>
     </servlet-mapping>
 
     <filter>

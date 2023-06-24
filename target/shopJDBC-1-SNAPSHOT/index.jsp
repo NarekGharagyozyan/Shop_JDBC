@@ -111,6 +111,20 @@
       color: red;
     }
 
+    .checkbox_div {
+      display: flex;
+      max-width: 160px;
+      column-gap: 7px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .checkbox {
+      width: 20px !important;
+      height:20px !important;
+      margin: 0 !important;
+    }
+
   </style>
 </head>
 <body>
@@ -122,7 +136,11 @@
       <header>Login</header>
       <form method="post" action="/login">
         <input type="email" placeholder="Enter your email" name="email">
-        <input type="password" placeholder="Enter your password" name="password">
+        <input style="margin-bottom: 15px;" type="password" placeholder="Enter your password" name="password">
+        <div class="checkbox_div">
+          <input class="checkbox" type="checkbox" name="rememberMe">
+          <span style="width: 100%">Remember me</span>
+        </div>
         <input type="submit" class="button" value="login">
       </form>
       <div class="signup">
