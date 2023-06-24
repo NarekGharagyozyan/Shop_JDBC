@@ -3,6 +3,7 @@ package am.myOffice.shopJDBC.controller.Product;
 import am.myOffice.shopJDBC.repository.product.ProductRepository;
 import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Parameter;
 import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
@@ -20,11 +21,11 @@ public class ProductServlet extends HttpServlet {
         var columns = productRepository.getColumns();
 
         try {
-            req.setAttribute("products", allProducts);
-            req.setAttribute("columns", columns);
+            req.setAttribute(Parameter.PRODUCTS_ATTRIBUTE, allProducts);
+            req.setAttribute(Parameter.COLUMNS_ATTRIBUTE, columns);
             req.getRequestDispatcher(Path.PRODUCT_PATH).forward(req,resp);
         }catch (Exception e) {
-            req.setAttribute("message", e.getMessage());
+            req.setAttribute(Parameter.MESSAGE_ATTRIBUTE, e.getMessage());
             req.getRequestDispatcher(Path.PRODUCT_PATH).forward(req,resp);
         }
     }

@@ -10,6 +10,7 @@ import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.sevice.user.impl.UserServiceImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
 import am.myOffice.shopJDBC.util.constants.Message;
+import am.myOffice.shopJDBC.util.constants.Parameter;
 import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
@@ -29,19 +30,19 @@ public class RegisterServlet extends HttpServlet {
 
 
         try {
-            user.setName(req.getParameter("name"));
-            user.setLastname(req.getParameter("lastname"));
-            user.setBalance(Double.parseDouble(req.getParameter("balance")));
-            user.setEmail(req.getParameter("email"));
-            user.setPassword(req.getParameter("password"));
-            user.setAge(Integer.parseInt(req.getParameter("age")));
+            user.setName(req.getParameter(Parameter.NAME_PARAMETER));
+            user.setLastname(req.getParameter(Parameter.LASTNAME_PARAMETER));
+            user.setBalance(Double.parseDouble(req.getParameter(Parameter.BALANCE_PARAMETER)));
+            user.setEmail(req.getParameter(Parameter.EMAIL_PARAMETER));
+            user.setPassword(req.getParameter(Parameter.PASSWORD_PARAMETER));
+            user.setAge(Integer.parseInt(req.getParameter(Parameter.AGE_PARAMETER)));
 
-            userRepository.isUserExists(req.getParameter("email"));
+            userRepository.isUserExists(req.getParameter(Parameter.EMAIL_PARAMETER));
             userService.register(user);
-            req.setAttribute("email",req.getParameter("email"));
+            req.setAttribute(Parameter.EMAIL_PARAMETER,req.getParameter(Parameter.EMAIL_PARAMETER));
             req.getRequestDispatcher(Path.INDEX_PATH).forward(req,resp);
         } catch (Exception e) {
-            req.setAttribute("message", e.getMessage());
+            req.setAttribute(Parameter.MESSAGE_ATTRIBUTE, e.getMessage());
             req.getRequestDispatcher(Path.REGISTER_PATH).forward(req,resp);
         }
     }

@@ -1,5 +1,6 @@
 <%@ page import="am.myOffice.shopJDBC.model.Product" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="am.myOffice.shopJDBC.util.constants.Parameter" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 6/19/2023
@@ -103,13 +104,15 @@
 <body>
     <div  class="header">
         <h2>Home Page</h2>
-        <h2><%= (String) request.getSession().getAttribute("email") != null ? "welcome dear " + request.getSession().getAttribute("email") : ""%></h2>
+        <h2><%= request.getSession().getAttribute(Parameter.EMAIL_PARAMETER) != null ?
+                "Welcome Dear " + request.getSession().getAttribute(Parameter.EMAIL_PARAMETER) : ""%></h2>
         <form class="btn_form" action="/logout">
             <input class="btn" type="submit" value="Log Out">
         </form>
     </div>
 
-    <h3 class="message" ><%= (String) request.getAttribute("message") != null ?  request.getAttribute("message") : "" %></h3>
+    <h3 class="message" ><%= request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) != null ?
+            request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) : "" %></h3>
 
     <div class="buttons">
         <form action="/product">

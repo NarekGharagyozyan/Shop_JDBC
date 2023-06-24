@@ -1,5 +1,6 @@
 <%@ page import="am.myOffice.shopJDBC.model.Product" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="am.myOffice.shopJDBC.util.constants.Parameter" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 6/22/2023
@@ -103,8 +104,8 @@
 <body>
 
     <%
-        List<Product> allProducts = (List<Product>) request.getAttribute("products");
-        List<String> columns = (List<String>)request.getAttribute("columns");
+        List<Product> allProducts = (List<Product>) request.getAttribute(Parameter.PRODUCTS_ATTRIBUTE);
+        List<String> columns = (List<String>)request.getAttribute(Parameter.COLUMNS_ATTRIBUTE);
     %>
 
     <h1>Product Page</h1>

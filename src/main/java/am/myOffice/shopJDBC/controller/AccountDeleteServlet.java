@@ -5,6 +5,7 @@ import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.sevice.user.impl.UserServiceImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Parameter;
 import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
@@ -20,11 +21,11 @@ public class AccountDeleteServlet extends HttpServlet {
         UserService userService = new UserServiceImpl(userRepository);
 
         try {
-            String email = (String)req.getSession().getAttribute("email");
+            String email = (String)req.getSession().getAttribute(Parameter.EMAIL_PARAMETER);
             userService.deleteAccount(email);
             req.getRequestDispatcher(Path.INDEX_PATH).forward(req,resp);
         } catch (Exception e){
-            req.setAttribute("message",e.getMessage());
+            req.setAttribute(Parameter.EMAIL_PARAMETER,e.getMessage());
         }
     }
 }

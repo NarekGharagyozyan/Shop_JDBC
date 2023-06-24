@@ -4,6 +4,7 @@ import am.myOffice.shopJDBC.model.Product;
 import am.myOffice.shopJDBC.repository.product.ProductRepository;
 import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Parameter;
 import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
@@ -20,20 +21,20 @@ public class UpdateProductServlet extends HttpServlet {
         Product product = new Product();
 
         try {
-            product.setName(req.getParameter("name"));
-            product.setPrice(Double.parseDouble(req.getParameter("price")));
-            product.setCategory(req.getParameter("category"));
-            product.setExists(Boolean.parseBoolean(req.getParameter("isexists")));
-            var id = Long.parseLong(req.getParameter("id"));
+            product.setName(req.getParameter(Parameter.NAME_PARAMETER));
+            product.setPrice(Double.parseDouble(req.getParameter(Parameter.PRICE_PARAMETER)));
+            product.setCategory(req.getParameter(Parameter.CATEGORY_PARAMETER));
+            product.setExists(Boolean.parseBoolean(req.getParameter(Parameter.IS_EXISTS_PARAMETER)));
+            var id = Long.parseLong(req.getParameter(Parameter.ID_PARAMETER));
 
             productRepository.update(product, id);
             List<Product> allProducts = productRepository.getAll();
             List<String> columns = productRepository.getColumns();
-            req.setAttribute("products",allProducts);
-            req.setAttribute("columns",columns);
+            req.setAttribute(Parameter.PRODUCTS_ATTRIBUTE,allProducts);
+            req.setAttribute(Parameter.COLUMNS_ATTRIBUTE,columns);
             req.getRequestDispatcher(Path.PRODUCT_PATH).forward(req,resp);
         } catch (Exception e) {
-            req.setAttribute("message",e.getMessage());
+            req.setAttribute(Parameter.MESSAGE_ATTRIBUTE,e.getMessage());
             req.getRequestDispatcher(Path.UPDATE_PRODUCT_PATH).forward(req,resp);
         }
     }

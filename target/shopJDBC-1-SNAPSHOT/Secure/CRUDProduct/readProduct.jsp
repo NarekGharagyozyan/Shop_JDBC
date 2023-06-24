@@ -1,4 +1,4 @@
-<%--
+<%@ page import="am.myOffice.shopJDBC.util.constants.Parameter" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 6/20/2023
@@ -98,19 +98,21 @@
     </style>
 </head>
 <body>
-<h3 class="message" ><%= (String) request.getAttribute("message") != null ?  request.getAttribute("message") : "" %></h3>
-<h3 class="product"><%= (String) request.getAttribute("product") != null ?  request.getAttribute("product") : "" %></h3>
 
-<div class="container">
-    <div class="login form">
-        <header>Read Product</header>
-        <form method="post" action="/readProduct">
-            <input type="text" placeholder="id" name="id">
-            <input type="submit" class="button" value="read">
-        </form>
+    <h3 class="message" ><%= request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) != null ?
+            request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) : "" %></h3>
+    <h3 class="product"><%= request.getAttribute(Parameter.PRODUCT_ATTRIBUTE) != null ?
+            request.getAttribute(Parameter.PRODUCT_ATTRIBUTE) : "" %></h3>
+
+    <div class="container">
+        <div class="login form">
+            <header>Read Product</header>
+            <form method="post" action="/readProduct">
+                <input type="text" placeholder="id" name="id">
+                <input type="submit" class="button" value="read">
+            </form>
+        </div>
     </div>
-</div>
-
 
 </body>
 </html>

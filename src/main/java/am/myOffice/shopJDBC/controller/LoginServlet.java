@@ -5,6 +5,7 @@ import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.sevice.user.impl.UserServiceImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Parameter;
 import am.myOffice.shopJDBC.util.constants.Path;
 import am.myOffice.shopJDBC.util.encoder.AESManager;
 
@@ -23,21 +24,21 @@ public class LoginServlet extends HttpServlet {
 
         UserRepository userRepository = new UserRepositoryImpl(DatabaseConnection.getInstance());
         UserService userService = new UserServiceImpl(userRepository);
-        var email = req.getParameter("email");
-        var password = req.getParameter("password");
-        var rememberMe = req.getParameter("rememberMe");
+        var email = req.getParameter(Parameter.EMAIL_PARAMETER);
+        var password = req.getParameter(Parameter.PASSWORD_PARAMETER);
+        var rememberMe = req.getParameter(Parameter.REMEMBER_ME_PARAMETER);
         System.out.println(rememberMe);
         try {
             userService.login(email,password);
             if (rememberMe  != null && rememberMe.equals("on")){
-                Cookie cookie = new Cookie("remember", AESManager.encrypt(email + ":" + password));
+                Cookie cookie = new Cookie(Parameter.REMEMBER_COOKIE, AESManager.encrypt(email + ":" + password));
                 cookie.setMaxAge(360000);
                 resp.addCookie(cookie);
             }
-            req.getSession().setAttribute("email", email);
+            req.getSession().setAttribute(Parameter.EMAIL_PARAMETER, email);
             req.getRequestDispatcher(Path.HOME_PATH).forward(req,resp);
         } catch (Exception e) {
-            req.setAttribute("message", e.getMessage());
+            req.setAttribute(Parameter.MESSAGE_ATTRIBUTE, e.getMessage());
             req.getRequestDispatcher(Path.INDEX_PATH).forward(req,resp);
         }
     }

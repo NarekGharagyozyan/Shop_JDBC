@@ -5,6 +5,7 @@ import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
 import am.myOffice.shopJDBC.sevice.user.impl.UserServiceImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Parameter;
 import am.myOffice.shopJDBC.util.constants.Path;
 import am.myOffice.shopJDBC.util.CookieUtil;
 import am.myOffice.shopJDBC.util.encoder.AESManager;
@@ -19,7 +20,7 @@ public class StartServlet extends HelloServlet{
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String encodedString = CookieUtil.getCookieValueByName(req.getCookies(), "remember");
+        String encodedString = CookieUtil.getCookieValueByName(req.getCookies(), Parameter.REMEMBER_COOKIE);
 
         UserService userService = new UserServiceImpl(new UserRepositoryImpl(DatabaseConnection.getInstance()));
 
@@ -31,17 +32,17 @@ public class StartServlet extends HelloServlet{
 
                 userService.login(email,password);
 
-                Cookie cookie = new Cookie("remember", AESManager.encrypt(email + ":" + password));
+                Cookie cookie = new Cookie(Parameter.REMEMBER_COOKIE, AESManager.encrypt(email + ":" + password));
                 cookie.setMaxAge(360000);
                 resp.addCookie(cookie);
 
-                req.getSession().setAttribute("email", email);
+                req.getSession().setAttribute(Parameter.EMAIL_PARAMETER, email);
                 req.getRequestDispatcher(Path.HOME_PATH).forward(req,resp);
             }else {
                 resp.sendRedirect(Path.INDEX_PATH);
             }
         } catch (Exception e) {
-            req.setAttribute("message", e.getMessage());
+            req.setAttribute(Parameter.MESSAGE_ATTRIBUTE, e.getMessage());
             req.getRequestDispatcher(Path.INDEX_PATH).forward(req,resp);
         }
     }

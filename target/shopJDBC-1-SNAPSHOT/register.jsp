@@ -1,4 +1,4 @@
-<%--
+<%@ page import="am.myOffice.shopJDBC.util.constants.Parameter" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 6/20/2023
@@ -110,28 +110,30 @@
 <body>
 
 
-    <h3 class="message"><%= (String) request.getAttribute("message") != null ?  request.getAttribute("message") : "" %></h3>
-  <div class="container">
-      <div class="registration form">
-          <header>Signup</header>
-          <form method="post" action="/register" >
-              <div class="register_form">
-                  <input type="text" placeholder="Enter your name" name="name">
-                  <input type="text" placeholder="Enter your lastname" name="lastname">
-                  <input type="text" placeholder="Enter your balance" name="balance">
-                  <input type="email" placeholder="Enter your email" name="email">
-                  <input type="password" placeholder="Enter your password" name="password">
-                  <input type="text" placeholder="Enter your age" name="age">
+    <h3 class="message"><%= request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) != null ?
+            request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) : "" %></h3>
+
+      <div class="container">
+          <div class="registration form">
+              <header>Signup</header>
+              <form method="post" action="/register" >
+                  <div class="register_form">
+                      <input type="text" placeholder="Enter your name" name="name">
+                      <input type="text" placeholder="Enter your lastname" name="lastname">
+                      <input type="text" placeholder="Enter your balance" name="balance">
+                      <input type="email" placeholder="Enter your email" name="email">
+                      <input type="password" placeholder="Enter your password" name="password">
+                      <input type="text" placeholder="Enter your age" name="age">
+                  </div>
+                  <input type="submit" class="button" value="register">
+              </form>
+              <div class="signup">
+            <span class="signup">Already have an account?
+             <a href="index.jsp">Login</a>
+            </span>
               </div>
-              <input type="submit" class="button" value="register">
-          </form>
-          <div class="signup">
-        <span class="signup">Already have an account?
-         <a href="index.jsp">Login</a>
-        </span>
           </div>
       </div>
-  </div>
-  </form>
+      </form>
 </body>
 </html>

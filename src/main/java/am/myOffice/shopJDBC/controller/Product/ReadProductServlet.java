@@ -3,6 +3,7 @@ package am.myOffice.shopJDBC.controller.Product;
 import am.myOffice.shopJDBC.repository.product.ProductRepository;
 import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryImpl;
 import am.myOffice.shopJDBC.util.DatabaseConnection;
+import am.myOffice.shopJDBC.util.constants.Parameter;
 import am.myOffice.shopJDBC.util.constants.Path;
 
 import javax.servlet.ServletException;
@@ -17,11 +18,11 @@ public class ReadProductServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         ProductRepository productRepository = new ProductRepositoryImpl(DatabaseConnection.getInstance());
         try {
-            var product = productRepository.get(Long.parseLong(req.getParameter("id")));
-            req.setAttribute("product",product.toString());
+            var product = productRepository.get(Long.parseLong(req.getParameter(Parameter.ID_PARAMETER)));
+            req.setAttribute(Parameter.PRODUCT_ATTRIBUTE,product.toString());
             req.getRequestDispatcher(Path.READ_PRODUCT_PATH).forward(req,resp);
         } catch (Exception e) {
-            req.setAttribute("message",e.getMessage());
+            req.setAttribute(Parameter.MESSAGE_ATTRIBUTE,e.getMessage());
             req.getRequestDispatcher(Path.READ_PRODUCT_PATH).forward(req,resp);
         }
     }
