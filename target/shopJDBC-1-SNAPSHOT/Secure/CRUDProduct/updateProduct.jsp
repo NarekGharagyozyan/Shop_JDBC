@@ -97,7 +97,7 @@
 
     <h3 class="message" ><%= request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) != null ?
             request.getAttribute(Parameter.MESSAGE_ATTRIBUTE) : "" %></h3>
-  
+
     <div class="container">
       <div class="login form">
         <header>Update Product</header>

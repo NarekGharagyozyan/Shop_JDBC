@@ -2,7 +2,6 @@ package am.myOffice.shopJDBC.repository.product;
 
 import am.myOffice.shopJDBC.model.Product;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface ProductRepository {
@@ -15,7 +14,7 @@ public interface ProductRepository {
 
     List<Product> getAll();
 
-    List<Product> findProductsByName(String name) throws SQLException;
+    List<Product> findProductsByName(String name);
 
     void delete(Long id);
 

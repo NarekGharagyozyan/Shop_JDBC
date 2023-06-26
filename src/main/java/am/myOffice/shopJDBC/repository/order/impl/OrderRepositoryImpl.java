@@ -69,7 +69,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public Order getOrderById(Long id){
+    public Order getOrderById(Long id) {
         Order order = new Order();
         PreparedStatement preparedStatement;
         try {
@@ -88,7 +88,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> getAll(){
+    public List<Order> getAll() {
         List<Order> ordersList = new ArrayList<>();
         ResultSet resultSet;
         try {

@@ -6,8 +6,10 @@ import am.myOffice.shopJDBC.repository.order.OrderRepository;
 import am.myOffice.shopJDBC.repository.order.impl.OrderRepositoryImpl;
 import am.myOffice.shopJDBC.repository.product.ProductRepository;
 import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryImpl;
+import am.myOffice.shopJDBC.repository.product.impl.ProductRepositoryJpaImpl;
 import am.myOffice.shopJDBC.repository.user.UserRepository;
 import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryImpl;
+import am.myOffice.shopJDBC.repository.user.impl.UserRepositoryJpaImpl;
 import am.myOffice.shopJDBC.sevice.order.OrderService;
 import am.myOffice.shopJDBC.sevice.order.impl.OrderServiceImpl;
 import am.myOffice.shopJDBC.sevice.user.UserService;
@@ -21,6 +23,8 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
+
 
 //        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 //

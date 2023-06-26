@@ -2,19 +2,18 @@ package am.myOffice.shopJDBC.repository.order;
 
 import am.myOffice.shopJDBC.model.Order;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface OrderRepository {
 
 
-    void create(Order order) throws Exception;
+    void create(Order order);
 
-    void update(Order order) throws SQLException;
+    void update(Order order);
 
-    Order getOrderById(Long id) throws SQLException;
+    Order getOrderById(Long id);
 
-    List<Order> getAll() throws SQLException;
+    List<Order> getAll();
 
-    void delete(Long id) throws SQLException;
+    void delete(Long id);
 }

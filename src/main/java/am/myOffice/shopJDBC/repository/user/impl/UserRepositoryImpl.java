@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void create(User user){
+    public void create(User user) {
 
         PreparedStatement preparedStatement = null;
         try {

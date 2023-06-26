@@ -125,7 +125,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> findProductsByName(String name){
+    public List<Product> findProductsByName(String name) {
         List<Product> products = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         try {

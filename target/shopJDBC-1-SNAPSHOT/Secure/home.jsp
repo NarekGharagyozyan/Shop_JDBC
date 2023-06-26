@@ -105,7 +105,7 @@
     <div  class="header">
         <h2>Home Page</h2>
         <h2><%= request.getSession().getAttribute(Parameter.EMAIL_PARAMETER) != null ?
-                "welcome dear " + request.getSession().getAttribute(Parameter.EMAIL_PARAMETER) : ""%></h2>
+                "Welcome Dear " + request.getSession().getAttribute(Parameter.EMAIL_PARAMETER) : ""%></h2>
         <form class="btn_form" action="/logout">
             <input class="btn" type="submit" value="Log Out">
         </form>
