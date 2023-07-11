@@ -25,7 +25,7 @@ public class AccountDeleteServlet extends HttpServlet {
             userService.deleteAccount(email);
             req.getRequestDispatcher(Path.INDEX_PATH).forward(req,resp);
         } catch (Exception e){
-            req.setAttribute(Parameter.EMAIL_PARAMETER,e.getMessage());
+            req.setAttribute(Parameter.MESSAGE_ATTRIBUTE,e.getMessage());
         }
     }
 }
